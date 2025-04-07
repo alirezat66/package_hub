@@ -159,9 +159,4 @@ void main(List<String> args) async {
     print('❌ Error: $e');
     exit(1);
   }
-  /* print('✅ Successfully modified example with DevicePreview');
-    print('\nNext steps:');
-    print('1. cd $packageName/example');
-    print('2. flutter pub get');
-    print('3. flutter run -d chrome'); */
 }
