@@ -1,12 +1,18 @@
 {
     "manifest_version": 3,
-    "name": "Flutter Package Hub",
-    "version": "1.0",
-    "description": "A Chrome extension to preview Flutter packages in the browser",
+    "name": "Flutter Example Runner",
+    "version": "1.0.0",
+    "description": "Run Flutter package examples directly in browser with device preview",
     "permissions": [
         "activeTab",
-        "scripting",
         "storage"
+    ],
+    "host_permissions": [
+        "https://pub.dev/*",
+        "https://github.com/*",
+        "https://api.github.com/*",
+        "https://raw.githubusercontent.com/*",
+        "https://api.zapp.run/*"
     ],
     "action": {
         "default_popup": "popup.html",
@@ -16,12 +22,16 @@
             "128": "icons/icon128.png"
         }
     },
-    "background": {
-        "service_worker": "background.js"
-    },
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
     }
 }

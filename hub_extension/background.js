@@ -1,34 +1,27 @@
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'previewPackage') {
-    handlePackagePreview(request.packageName)
-      .then(() => sendResponse({ success: true }))
+// Background service worker for Flutter Example Runner
+
+// Initialize when the extension is installed
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('Flutter Example Runner extension installed');
+});
+
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // Handle long-running tasks if needed
+  if (message.action === 'trackBuildProgress') {
+    // If we need to track build progress in the background
+    trackBuildProgress(message.buildId)
+      .then(result => sendResponse({ success: true, data: result }))
       .catch(error => sendResponse({ success: false, error: error.message }));
     return true; // Required for async response
   }
+  
+  return false;
 });
 
-async function handlePackagePreview(packageName) {
-  try {
-    // 1. Fetch package info from pub.dev
-    const response = await fetch(`https://pub.dev/api/packages/${packageName}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch package info');
-    }
-
-    const packageInfo = await response.json();
-    const latest = packageInfo.latest.pubspec;
-    const repoUrl = latest.repository || latest.homepage;
-
-    if (!repoUrl) {
-      throw new Error('No repository URL found for package');
-    }
-
-    // 2. Create a new tab with the preview
-    const previewUrl = `https://flutter-package-preview.web.app/?package=${packageName}&repo=${encodeURIComponent(repoUrl)}`;
-    await chrome.tabs.create({ url: previewUrl });
-
-  } catch (error) {
-    console.error('Error processing package:', error);
-    throw error;
-  }
-} 
+// Track build progress (placeholder for potential background processing)
+async function trackBuildProgress(buildId) {
+  // This would implement any background processing required
+  // Currently just a placeholder
+  return { status: 'completed' };
+}
