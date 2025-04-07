@@ -1,0 +1,9 @@
+{
+    "name": "flutter_package_hub",
+    "description": "Flutter Package Hub Native Messaging Host",
+    "path": "FULL_PATH_TO_YOUR_SCRIPT/native_messaging_host.js",
+    "type": "stdio",
+    "allowed_origins": [
+        "chrome-extension://YOUR_EXTENSION_ID/"
+    ]
+}
